@@ -1,0 +1,9 @@
+﻿  Console.cpp
+  Console.h
+  Graphic.cpp
+  Library.h
+  MainCaro.cpp
+  NewGame.cpp
+  Generating Code...
+Caro-Project\x64\Debug\Console.obj : warning LNK4042: object specified more than once; extras ignored
+  Caro-Project.vcxproj -> C:\Users\banba\OneDrive\Documents\HCMUS Study\Caro-Project\x64\Debug\Caro-Project.exe

@@ -15,6 +15,11 @@ Made with the effort and love from **Team 2**.
 >[!IMPORTANT]
 >Instructor: **Thầy Trương Toàn Thịnh**
 
+## Game's Description
+- **Game's name**: Caro Game - 24CTT3A - Group 2
+- **Game's base**: [link](./GAMEBASE.md)
+- **Submission Requirements**: [link](./REQUIREMENT.md)
+
 ## Additional Information:
 - **HCMUS** stands for ***Ho Chi Minh City Universe of Science***, one of the five affiliated universities of the **Vietnam National University, Ho Chi Minh City**.
 - **FIT** stands for ***Faculty of Information Technology***.
