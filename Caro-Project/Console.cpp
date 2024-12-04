@@ -87,6 +87,12 @@ int isNextMove()
 		// Press ESC
 		if (ch == 27) return 5;
 
+		//Press U
+		if (ch == 'U' || ch == 'u') return 6;
+
+		//Press I
+		if (ch == 'I' || ch == 'i') return 7;
+
 		if (ch == -32) {						// Arrow
 			ch = _getch();
 

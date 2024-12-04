@@ -45,8 +45,8 @@ void drawMainMenu(int XX, int YY) {
 	a2[3] = { XX, YY + 17, menuTextLength, selectedTextColor, ">>     HELP     <<" };
 	a2[4] = { XX, YY + 22, menuTextLength, selectedTextColor, ">>     EXIT     <<" };
 
+	pullList();
 	int S = 0;
-
 
 	while (true) {
 		drawCaroMain(XX - 6, YY - 7);

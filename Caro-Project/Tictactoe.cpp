@@ -3,6 +3,8 @@
 #include "Console.h"
 #include "Graphic.h"
 #include "MainCaro.h"
+#include "LoadGame.h"
+
 #define moveTo(x, y) setPos(status[x][y].X, status[x][y].Y)
 const int boardSize = 15;
 _Point status[boardSize + 5][boardSize + 5];
@@ -633,12 +635,12 @@ void startGame(bool vsBot, bool isNewGame, int XX, int YY, string name1, string 
                 if (Key == 3 && x < boardSize) x += 1;
                 if (Key == 4 && y < boardSize) y += 1;
                 if (Key == 5){ // exit game
-                    //drawStatus(XX - 31, YY + 2 * boardmaxSize - 1, 4);
+                    drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 4);
                     while (1) {
                         char key = _getch();
                         if (key == 'N' || key == 'n') break;
                         else if (key == 'Y' || key == 'y') return;
-                    } //drawStatus(XX - 31, YY + 2 * boardmaxSize - 1, 1);
+                    } drawOutBoard(XX + 11, YY + 2 * boardSize + 2, 1);
                 }
                 if (Key == 6){ // Undo
                     for (int i = 0; i < (vsBot ? 2 : 1); i++) if (moveMade.size()){
@@ -664,7 +666,7 @@ void startGame(bool vsBot, bool isNewGame, int XX, int YY, string name1, string 
                     }
                 }
                 if (Key == 7){ // save game
-                    //saveGame(XX, YY, Cache, Xscore, Oscore, name1, name2, fileName, vsBot);
+                    saveGame(XX, YY, Data, Xscore, Oscore, name1, name2, fileName, vsBot);
                 }
                 moveTo(x, y);
             }
@@ -697,8 +699,8 @@ void startGame(bool vsBot, bool isNewGame, int XX, int YY, string name1, string 
     //for (int i = 0; i < 38; ++i)
     //    cout << char(196);
 
-    setPos(XX - (cur_player == 'O'), YY + 28);
-    setColor(15, 8);  cout << "<< Press Y to continue or N to exit >>";
+    setPos(XX - (cur_player == 'O') - 2, YY + 28);
+    setColor(15, 8);  cout <<"<< Press Y to continue or N to exit >>";
     setColor(15, 0);
     
     // Check player want to play again

@@ -282,7 +282,8 @@ void drawBoard(int Xi, int Yi, string name1, string name2, int Xscore, int Oscor
 			status[y][x].X = XX + (x - 1) * 4 + 2;
 			status[y][x].opt = '.';
 		}
-
+	drawOutBoard(XX + 11, YY + 2 * boardSize + 2, 1);
+	drawName_LoadBoard(XX + 4 * boardSize + 1, YY + 2 * boardSize + 2, fileName);
 }
 
 void drawLoadMenu(int XX, int YY, int size, int b_color, string str) { // 3 * size, Menu Board
@@ -306,7 +307,7 @@ void drawLoadMenu(int XX, int YY, int size, int b_color, string str) { // 3 * si
 
 void drawName_LoadBoard(int XX, int YY, string fileName) {
 	setPos(XX, YY);
-	setColor(0, 15);  cout << " BOARD NAME: ";
+	setColor(15, 0);  cout << "Board's Name: ";
 	if ((int)fileName.size() == 0) fileName = "[NULL]";
 	while ((int)fileName.size() <= 10) fileName.push_back(' ');
 	cout << fileName;
@@ -316,14 +317,13 @@ void drawName_LoadBoard(int XX, int YY, string fileName) {
 void drawOutBoard(int XX, int YY, int opt) {
 	setPos(XX - 3, YY);
 	if (opt == 1) {
-		setColor(11, 0); cout << ">> Playing";
-		setColor(15, 0); cout << "    | 'I'- Save  | 'U'- Undo  | 'Esc'- Exit  |  ";
+		setColor(11, 0); cout << "|  'I'- Save  |  'U'- Undo  |  'Esc'- Exit  |";
 		ShowCur(1);
 	}
 
 	if (opt == 2) {
 		setColor(11, 0);  cout << ">> File's name:";
-		setColor(15, 0);  cout << "                                           ";
+		setColor(15, 0);  cout << "                                    ";
 		ShowCur(1);
 	}
 
@@ -335,9 +335,13 @@ void drawOutBoard(int XX, int YY, int opt) {
 
 	if (opt == 4) {
 		setColor(11, 0);
-		cout << ">> Do you want to exit? Prông ss Y/N (Remember to save game) ";
+		cout << ">> Do you want to exit? Press Y/N (Remember to save game)";
 		ShowCur(0);
-	} setColor(15, 0);
+	} 
+	if (opt == 5) {
+		setColor(15, 0); cout << "                                                                                 ";
+	}
+	setColor(15, 0);
 }
 
 void drawSavedFile(int XX, int YY) {

@@ -30,7 +30,7 @@ void loadGame(int XX, int YY) {
 
 		if (i <= size) {
 			string tmp = fileSave[i];
-			int siz = 8 - (int)tmp.size();
+			int siz = 14 - (int)tmp.size();
 
 			for (int j = 1; 2 * j <= siz; ++j)
 				tmp = ' ' + tmp + ' ';
@@ -59,24 +59,24 @@ void loadGame(int XX, int YY) {
 
 		if (inputt == 0) {
 			loadMenu s3[3], s4[3];
-			s3[0] = { XX - 12, YY + 15, 16, 15, "     PLAY     " };
-			s3[1] = { XX + 8, YY + 15, 16, 15,  "    DELETE    " };
-			s3[2] = { XX + 28, YY + 15, 16, 15, "    RENAME    " };
+			s3[0] = { XX - 12, YY + 16, 16, 15, "     PLAY     " };
+			s3[1] = { XX + 8, YY + 16, 16, 15,  "    DELETE    " };
+			s3[2] = { XX + 28, YY + 16, 16, 15, "    RENAME    " };
 
-			s4[0] = { XX - 12, YY + 15, 16, 14, ">>   PLAY   <<" };
-			s4[1] = { XX + 8, YY + 15, 16, 14,  ">>  DELETE  <<" };
-			s4[2] = { XX + 28, YY + 15, 16, 14, ">>  RENAME  <<" };
+			s4[0] = { XX - 12, YY + 16, 16, 14, ">>   PLAY   <<" };
+			s4[1] = { XX + 8, YY + 16, 16, 14,  ">>  DELETE  <<" };
+			s4[2] = { XX + 28, YY + 16, 16, 14, ">>  RENAME  <<" };
 
 			s1[S].draw();
-			setPos(XX - 30, YY + 16); setColor(gameTheme);
+			setPos(XX - 30, YY + 17); setColor(gameTheme);
 			cout << "                                                                                 ";
-			setPos(XX - 24, YY + 16); setColor(11, 0); cout << " Choose: ";
+			setPos(XX - 24, YY + 17); setColor(11, 0); cout << " Choose: ";
 
 			int k = 0;
 			while (true) {
-				setPos(XX - 30, YY + 16); setColor(gameTheme);
+				setPos(XX - 30, YY + 17); setColor(gameTheme);
 				cout << "                                                                                 ";
-				setPos(XX - 24, YY + 16); setColor(11, 0); cout << " Choose: ";
+				setPos(XX - 24, YY + 17); setColor(11, 0); cout << " Choose: ";
 
 				for (int j = 0; j < 3; ++j)
 					s3[j].draw();
@@ -87,8 +87,79 @@ void loadGame(int XX, int YY) {
 				else if (inputt == 2) k = (k + 2) % 3;
 				else if (inputt == 4) k = (k + 1) % 3;
 				else if (inputt == 0) {
-					
-					//continue
+					if (k == 0) {		// Load file and play
+						vector<ii> Data;
+						int Xscore, Oscore;
+						string name1, name2;
+						bool vsBot;
+
+						loadFromFile(fileSave[S], Data, Xscore, Oscore, name1, name2, vsBot);
+						startGame(vsBot, 0, XX, YY, name1, name2, Data, fileSave[S], Xscore, Oscore);
+						return;
+					}
+
+					if (k == 1) {		// Delete file
+						deleteFile(fileSave[S]);
+						for (int t = S + 1; t <= size; ++t) {
+							fileSave[t - 1] = fileSave[t];
+							s1[t - 1].str = s1[t].str;
+							s2[t - 1].str = s2[t].str;
+						}
+
+						fileSave.pop_back();
+						s1[size].str = "      EMPTY       ";
+						s1[size].b_color = 11;
+						s2[size].str = "";
+						--size;  S = min(S, size);
+						drawOutBoard(XX - 12, YY + 16, 5);
+						drawOutBoard(XX - 24, YY + 17, 5);
+						drawOutBoard(XX - 24, YY + 18, 5);
+					}
+					else {			// Rename file
+						setColor(gameTheme);
+						setPos(XX - 29, YY + 16); cout << "                                                                               ";
+						setPos(XX - 29, YY + 17); cout << "                                                                               ";
+						setPos(XX - 29, YY + 18); cout << "                                                                               ";
+
+						// Import new name
+						renameFile:
+						string tmp;
+						setPos(XX - 24, YY + 17); cout << " New Name:                                                         ";
+						if (!insertName(XX - 13, YY + 17, tmp = fileSave[S])) continue;
+
+						// Check the same name
+						bool checkSame = 0;
+						for (int t = 0; t <= size; ++t)
+							if (t != S && fileSave[t] == tmp)
+								checkSame = 1;
+
+						if (checkSame) {
+							setPos(XX - 24, YY + 17); cout << ">> It already exists, do you want to change another name? Press Y/N";
+							while (true) {
+								char key = _getch();
+								if (key == 'N' || key == 'n') break;
+								else if (key == 'Y' || key == 'y') goto renameFile;
+							} break;
+						}
+						drawOutBoard(XX - 24, YY + 17, 5);
+
+						// Process rename
+						string old_name = fileSave[S] + ".txt";
+						string new_name = tmp + ".txt";
+						rename(old_name.c_str(), new_name.c_str());
+
+						fileSave[S] = tmp;
+						int siz = 14 - (int)tmp.size();
+
+						for (int t = 1; 2 * t <= siz; ++t)
+							tmp = ' ' + tmp + ' ';
+						if (siz & 1) tmp += ' ';
+
+						s1[S].str = "  " + tmp + "  ";
+						s2[S].str = ">>" + tmp + "<<";
+					}
+					pushList();
+					break;
 				}
 			} if (S != -1) s2[S].draw();
 
@@ -104,12 +175,12 @@ void loadGame(int XX, int YY) {
 	}
 }
 
-void saveGame(int XX, int YY, vector<ii> Cache, int Xscore, int Oscore, string name1, string name2, string& nameFile, bool vsBot) {
+void saveGame(int XX, int YY, vector<ii> Data, int Xscore, int Oscore, string name1, string name2, string& nameFile, bool vsBot) {
 	if (nameFile == "") {
 		insertNames:
-		drawOutBoard(XX - 31, YY + 2 * boardSize - 1, 2);
-		if (!insertName(XX - 18, YY + 2 * boardSize - 1, nameFile)) {
-			drawOutBoard(XX - 31, YY + 2 * boardSize - 1, 1);
+		drawOutBoard(XX - 3, YY + 2 * boardSize - 1, 2);
+		if (!insertName(XX + 10, YY + 2 * boardSize - 1, nameFile)) {
+			drawOutBoard(XX + 18, YY + 2 * boardSize - 1, 1);
 			return;
 		} if (nameFile == "") goto insertNames;
 	}
@@ -119,42 +190,44 @@ void saveGame(int XX, int YY, vector<ii> Cache, int Xscore, int Oscore, string n
 		if (tmp == nameFile) checkSame = 1;
 
 	if (checkSame) {
-		drawOutBoard(XX - 31, YY + 2 * boardSize - 1, 3);
+		drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 3);
 		while (true) {
 			char key = _getch();
 			if (key == 'N' || key == 'n') {
-				drawOutBoard(XX - 31, YY + 2 * boardSize - 1, 1);
+				drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 1);
 				nameFile = "";
+				drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 5);
 				return;
 			} else if (key == 'Y' || key == 'y') break;
 		}
+		drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 5);
 	} else {
 		while ((int)fileSave.size() >= 15)
 			fileSave.erase(fileSave.begin());
 		fileSave.push_back(nameFile);
 	}
 
-	drawOutBoard(XX - 31, YY + 2 * boardSize - 1, 1);
-	drawName_LoadBoard(XX + 4 * boardSize - 33, YY + 2 * boardSize - 1, nameFile);
+	drawOutBoard(XX - 3, YY + 2 * boardSize - 1, 1);
+	drawName_LoadBoard(XX + 4 * boardSize - 13, YY + 2 * boardSize - 1, nameFile);
 	pushList();
 
 	ofstream File(nameFile + ".txt");
 	File << int(vsBot) << " " << Xscore << " " << Oscore << '\n';
 	File << name1 << " " << name2 << '\n';
 
-	for (const auto& tmp : Cache) {
+	for (const auto& tmp : Data) {
 		File << tmp.first << " " << tmp.second << "\n";
 	} File.close();
 }
 
-void loadFromFile(string nameFile, vector<ii>& Cache, int& Xscore, int& Oscore, string& name1, string& name2, bool& vsBot) {	// Load data from file is saved
-	Cache.clear();
+void loadFromFile(string nameFile, vector<ii>& Data, int& Xscore, int& Oscore, string& name1, string& name2, bool& vsBot) {	// Load data from file is saved
+	Data.clear();
 	nameFile += ".txt";
 	ifstream file(nameFile);
 	int x, y;
 
 	file >> vsBot >> Xscore >> Oscore >> name1 >> name2;
-	while (file >> x >> y) Cache.emplace_back(x, y);
+	while (file >> x >> y) Data.emplace_back(x, y);
 	file.close();
 }
 
