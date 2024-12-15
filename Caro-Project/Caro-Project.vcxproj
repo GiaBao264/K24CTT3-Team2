@@ -76,6 +76,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,7 +134,10 @@
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="Help.cpp" />
-    <ClCompile Include="Library.h" />
+    <ClCompile Include="Language.cpp" />
+    <ClCompile Include="Library.h">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">#include &lt;Tensorflow/tensorflow/cc/client/client_session.h&gt;  </AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="LoadGame.cpp" />
     <ClCompile Include="MainCaro.cpp" />
     <ClCompile Include="NewGame.cpp" />
@@ -144,6 +149,7 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="Help.h" />
+    <ClInclude Include="Language.h" />
     <ClInclude Include="LoadGame.h" />
     <ClInclude Include="MainCaro.h" />
     <ClInclude Include="NewGame.h" />

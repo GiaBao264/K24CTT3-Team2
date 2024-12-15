@@ -1,4 +1,5 @@
 ﻿#include "Graphic.h"
+#include "Language.h"
 
 #define gameTheme 15, 0
 
@@ -54,7 +55,7 @@ void introAnimation(const string& filename, int delayTime, int stopTime, int x, 
 	while (!stopBlinking) {
 		setColor(color, 0);
 		setPos(55, 26);
-		cout << "                                            "; 
+		cout << "                                            ";
 		setPos(55, 28);
 		cout << "                                            ";
 		setPos(55, 27);
@@ -73,6 +74,11 @@ void introAnimation(const string& filename, int delayTime, int stopTime, int x, 
 	}
 	setColor(gameTheme);
 	system("cls");
+}
+void printCenteredAt(int x, int y, const string& str) {
+	int startX = x - (str.length() / 2);
+	setPos(startX, y);
+	cout << str;
 }
 void drawBox(int x, int y, int size, int bgColor, string text) {
 	setColor(gameTheme);
@@ -202,7 +208,7 @@ void drawMenu3(int x, int y, int size, int bgColor, string text)
 // Draw Board's Outline
 void drawBoardSize(int xx, int yy, int height, int width) {
 	setColor(gameTheme);
-	   
+
 	setPos(xx, yy); cout << char(218);
 	for (int i = 0; i < width - 2; ++i) cout << char(196);
 	cout << char(191);
@@ -235,7 +241,7 @@ void drawBoard(int Xi, int Yi, string name1, string name2, int Xscore, int Oscor
 	setColor(gameTheme);
 
 	/*--------------------------- Draw Board ---------------------------------*/
-	int XX = Xi - 14, YY = Yi - 3;		// [XX, YY] is located of pointer to draw board
+	int XX = Xi - 14, YY = Yi - 1;		// [XX, YY] is located of pointer to draw board
 	for (int y = 0; y <= 2 * boardSize; ++y) {
 		for (int x = 0; x <= 4 * boardSize; ++x) {
 			setPos(XX + x, YY + y);
@@ -282,8 +288,8 @@ void drawBoard(int Xi, int Yi, string name1, string name2, int Xscore, int Oscor
 			status[y][x].X = XX + (x - 1) * 4 + 2;
 			status[y][x].opt = '.';
 		}
-	drawOutBoard(XX + 11, YY + 2 * boardSize + 2, 1);
-	drawName_LoadBoard(XX + 4 * boardSize + 1, YY + 2 * boardSize + 2, fileName);
+	drawOutBoard(XX + 11, YY + 2 * boardSize, 1);
+	drawName_LoadBoard(XX + 4 * boardSize + 1, YY + 2 * boardSize, fileName);
 }
 
 void drawLoadMenu(int XX, int YY, int size, int b_color, string str) { // 3 * size, Menu Board
@@ -306,8 +312,8 @@ void drawLoadMenu(int XX, int YY, int size, int b_color, string str) { // 3 * si
 }
 
 void drawName_LoadBoard(int XX, int YY, string fileName) {
-	setPos(XX, YY);
-	setColor(15, 0);  cout << "Board's Name: ";
+	setPos(XX, YY + 2);
+	setColor(15, 0);  cout << (*selectedLanguage)["Board's Name: "];
 	if ((int)fileName.size() == 0) fileName = "[NULL]";
 	while ((int)fileName.size() <= 10) fileName.push_back(' ');
 	cout << fileName;
@@ -315,29 +321,29 @@ void drawName_LoadBoard(int XX, int YY, string fileName) {
 }
 
 void drawOutBoard(int XX, int YY, int opt) {
-	setPos(XX - 3, YY);
+	setPos(XX - 3, YY + 2);
 	if (opt == 1) {
-		setColor(11, 0); cout << "|  'I'- Save  |  'U'- Undo  |  'Esc'- Exit  |";
+		setColor(11, 0); cout << (*selectedLanguage)["|  'I'- Save  |  'U'- Undo  |  'Esc'- Exit  |"];
 		ShowCur(1);
 	}
 
 	if (opt == 2) {
-		setColor(11, 0);  cout << ">> File's name:";
+		setColor(11, 0);  cout << (*selectedLanguage)[">> File's name:"];
 		setColor(15, 0);  cout << "                                    ";
 		ShowCur(1);
 	}
 
 	if (opt == 3) {
 		setColor(11, 0);
-		cout << ">> It already exists, do you want to replace it? Press Y/N";
+		cout << (*selectedLanguage)[">> It already exists, do you want to replace it? Press Y/N"];
 		ShowCur(0);
 	}
 
 	if (opt == 4) {
 		setColor(11, 0);
-		cout << ">> Do you want to exit? Press Y/N (Remember to save game)";
+		cout << (*selectedLanguage)[">> Do you want to exit? Press Y/N (Remember to save game)"];
 		ShowCur(0);
-	} 
+	}
 	if (opt == 5) {
 		setColor(15, 0); cout << "                                                                                 ";
 	}
@@ -387,22 +393,202 @@ void printTimeAtPosition(int x, int y, int minutes, int seconds) {
 	setPos(currentPos.X, currentPos.Y);
 	ShowCur(1);
 }
-/*void countdownTimer(atomic<int>& timeLeftMin, atomic<int>& timeLeftSec, atomic<bool>& timeUp, atomic<bool>& turnDone) {
-	while (!turnDone && (timeLeftMin > 0 || timeLeftSec > 0)) {
-		printTimeAtPosition(28, 30, timeLeftMin, timeLeftSec);
-		sleep_for(seconds(1));
-		if (!turnDone) {
-			if (timeLeftSec > 0) {
-				--timeLeftSec;
-			}
-			else if (timeLeftMin > 0) {
-				timeLeftSec = 59;
-				--timeLeftMin;
-			}
-		}
-		if (timeLeftMin <= 0 && timeLeftSec <= 0) {
-			timeUp = true;
+void drawWord_IN_MATCH(int startX, int startY, int bground, int fground) {
+	drawI(startX, startY, bground, fground);
+	drawN(startX + 4, startY, bground, fground); // Adjust position for spacing
+	drawM(startX + 15, startY, bground, fground);
+	drawA(startX + 27, startY, bground, fground);
+	drawT(startX + 35, startY, bground, fground);
+	drawC(startX + 45, startY, bground, fground);
+	drawH(startX + 54, startY, bground, fground);
+}
+
+void drawWord_X_WIN(int startX, int startY, int bground, int fground) {
+	drawX(startX, startY, bground, fground);
+	drawW(startX + 11, startY, bground, fground);
+	drawI(startX + 22, startY, bground, fground);
+	drawN(startX + 26, startY, bground, fground);
+}
+
+void drawWord_O_WIN(int startX, int startY, int bground, int fground) {
+	drawO(startX, startY, bground, fground);
+	drawW(startX + 11, startY, bground, fground);
+	drawI(startX + 22, startY, bground, fground);
+	drawN(startX + 26, startY, bground, fground);
+}
+
+void drawEndMatch(int XX, int YY, int h, int w) {			// Pop Up Board
+	setColor(gameTheme);
+
+	setPos(XX + 2, YY);
+	cout << char(201);
+	for (int i = 0; i < w - 6; ++i) cout << char(205);
+	cout << char(187);
+
+	setPos(XX + 1, YY + 1); cout << char(201) << char(188);
+	for (int i = 2; i < w - 4; ++i) cout << " ";
+	cout << char(200) << char(187);
+
+	setPos(XX, YY + 2); cout << char(201) << char(188);
+	for (int i = 3; i < w - 1; ++i) cout << " ";
+	cout << char(200) << char(187);
+
+	for (int i = 0; i < h - 6; ++i) {
+		setPos(XX, YY + 3 + i); cout << char(186);
+		for (int j = 1; j < w - 1; ++j) cout << " ";
+		cout << char(186);
+	}
+
+	setPos(XX, YY + h - 3); cout << char(200) << char(187);
+	for (int i = 3; i < w - 1; ++i) cout << " ";
+	cout << char(201) << char(188);
+
+	setPos(XX + 1, YY + h - 2); cout << char(200) << char(187);
+	for (int i = 2; i < w - 4; ++i) cout << " ";
+	cout << char(201) << char(188);
+
+	setPos(XX + 2, YY + h - 1);
+	cout << char(200);
+	for (int i = 0; i < w - 6; ++i) cout << char(205);
+	cout << char(188);
+}
+void drawWord(const char* word, int x, int y, int bground, int fground) {
+	int offset = 0;
+	for (int i = 0; word[i] != '\0'; ++i) {
+		char c = toupper(word[i]);
+		switch (c) {
+		case 'A':
+			drawA(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'B':
+			drawB(x + offset, y, bground, fground);
+			offset += 6;
+			offset++;
+			break;
+		case 'C':
+			drawC(x + offset, y, bground, fground);
+			offset += 6;
+			offset++;
+			break;
+		case 'D':
+			drawD(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'E':
+			drawE(x + offset, y, bground, fground);
+			offset += 6;
+			offset++;
+			break;
+		case 'F':
+			drawF(x + offset, y, bground, fground);
+			offset += 6;
+			offset++;
+			break;
+		case 'G':
+			drawG(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'H':
+			drawH(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'I':
+			drawI(x + offset, y, bground, fground);
+			offset += 3;
+			offset++;
+			break;
+		case 'J':
+			drawJ(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'K':
+			drawK(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'L':
+			drawL(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'M':
+			drawM(x + offset, y, bground, fground);
+			offset += 11;
+			offset++;
+			break;
+		case 'N':
+			drawN(x + offset, y, bground, fground);
+			offset += 10;
+			offset++;
+			break;
+		case 'O':
+			drawO(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'P':
+			drawP(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'Q':
+			drawQ(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'R':
+			drawR(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'S':
+			drawS(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'T':
+			drawT(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'U':
+			drawU(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'V':
+			drawV(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'W':
+			drawW(x + offset, y, bground, fground);
+			offset += 10;
+			offset++;
+			break;
+		case 'X':
+			drawX(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		case 'Y':
+			drawY(x + offset, y, bground, fground);
+			offset += 9;
+			offset++;
+			break;
+		case 'Z':
+			drawZ(x + offset, y, bground, fground);
+			offset += 8;
+			offset++;
+			break;
+		default:
 			break;
 		}
 	}
-} */     
+}

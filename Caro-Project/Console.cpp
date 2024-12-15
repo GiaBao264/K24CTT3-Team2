@@ -20,7 +20,7 @@ void fixConsoleWindow(int WIDTH, int HEIGHT) {
 
 	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	MoveWindow(consoleWindow, 248, 10, NewSize.X, NewSize.Y, TRUE);
+	MoveWindow(consoleWindow, 248, 10, NewSize.X * 16, NewSize.Y * 8, TRUE);
 	SetConsoleScreenBufferSize(Handle, NewSize);
 	SetConsoleWindowInfo(Handle, TRUE, &r);
 	ShowScrollBar(consoleWindow, SB_VERT, FALSE);

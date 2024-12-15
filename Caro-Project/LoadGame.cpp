@@ -5,6 +5,8 @@
 #include "Tictactoe.h"
 #include "Graphic.h"
 #include "NewGame.h"
+#include "Language.h"
+
 
 #define gameTheme 15, 0
 
@@ -25,7 +27,7 @@ void loadGame(int XX, int YY) {
 	int size = min((int)fileSave.size() - 1, 8);
 	loadMenu s1[10], s2[10];
 	for (int i = 0; i < 9; ++i) {
-		s1[i] = { XX - 30 + 30 * (i / 3), YY + 5 + (i % 3) * 4, 20, 11, "      EMPTY       " };
+		s1[i] = { XX - 30 + 30 * (i / 3), YY + 5 + (i % 3) * 4, 20, 11, (*selectedLanguage)["      EMPTY       "] };
 		s2[i] = { XX - 30 + 30 * (i / 3), YY + 5 + (i % 3) * 4, 20, 8, "" };
 
 		if (i <= size) {
@@ -59,24 +61,24 @@ void loadGame(int XX, int YY) {
 
 		if (inputt == 0) {
 			loadMenu s3[3], s4[3];
-			s3[0] = { XX - 12, YY + 16, 16, 15, "     PLAY     " };
-			s3[1] = { XX + 8, YY + 16, 16, 15,  "    DELETE    " };
-			s3[2] = { XX + 28, YY + 16, 16, 15, "    RENAME    " };
+			s3[0] = { XX - 12, YY + 16, 16, 15, (*selectedLanguage)["     PLAY     "] };
+			s3[1] = { XX + 8, YY + 16, 16, 15,  (*selectedLanguage)["    DELETE    "] };
+			s3[2] = { XX + 28, YY + 16, 16, 15, (*selectedLanguage)["    RENAME    "] };
 
-			s4[0] = { XX - 12, YY + 16, 16, 14, ">>   PLAY   <<" };
-			s4[1] = { XX + 8, YY + 16, 16, 14,  ">>  DELETE  <<" };
-			s4[2] = { XX + 28, YY + 16, 16, 14, ">>  RENAME  <<" };
+			s4[0] = { XX - 12, YY + 16, 16, 14, (*selectedLanguage)[">>   PLAY   <<"] };
+			s4[1] = { XX + 8, YY + 16, 16, 14,  (*selectedLanguage)[">>  DELETE  <<"] };
+			s4[2] = { XX + 28, YY + 16, 16, 14, (*selectedLanguage)[">>  RENAME  <<"] };
 
 			s1[S].draw();
 			setPos(XX - 30, YY + 17); setColor(gameTheme);
 			cout << "                                                                                 ";
-			setPos(XX - 24, YY + 17); setColor(11, 0); cout << " Choose: ";
+			setPos(XX - 24, YY + 17); setColor(11, 0); cout << (*selectedLanguage)[" Choose: "];
 
 			int k = 0;
 			while (true) {
 				setPos(XX - 30, YY + 17); setColor(gameTheme);
 				cout << "                                                                                 ";
-				setPos(XX - 24, YY + 17); setColor(11, 0); cout << " Choose: ";
+				setPos(XX - 24, YY + 17); setColor(11, 0); cout << (*selectedLanguage)[" Choose: "];
 
 				for (int j = 0; j < 3; ++j)
 					s3[j].draw();
@@ -100,6 +102,9 @@ void loadGame(int XX, int YY) {
 
 					if (k == 1) {		// Delete file
 						deleteFile(fileSave[S]);
+						setPos(XX - 29, YY + 16); cout << "                                                                               ";
+						setPos(XX - 29, YY + 17); cout << "                                                                               ";
+						setPos(XX - 29, YY + 18); cout << "                                                                               ";
 						for (int t = S + 1; t <= size; ++t) {
 							fileSave[t - 1] = fileSave[t];
 							s1[t - 1].str = s1[t].str;
@@ -107,7 +112,7 @@ void loadGame(int XX, int YY) {
 						}
 
 						fileSave.pop_back();
-						s1[size].str = "      EMPTY       ";
+						s1[size].str = (*selectedLanguage)["      EMPTY       "];
 						s1[size].b_color = 11;
 						s2[size].str = "";
 						--size;  S = min(S, size);
@@ -122,9 +127,9 @@ void loadGame(int XX, int YY) {
 						setPos(XX - 29, YY + 18); cout << "                                                                               ";
 
 						// Import new name
-						renameFile:
+					renameFile:
 						string tmp;
-						setPos(XX - 24, YY + 17); cout << " New Name:                                                         ";
+						setPos(XX - 24, YY + 17); cout << (*selectedLanguage)[" New Name:                                                         "];
 						if (!insertName(XX - 13, YY + 17, tmp = fileSave[S])) continue;
 
 						// Check the same name
@@ -134,7 +139,7 @@ void loadGame(int XX, int YY) {
 								checkSame = 1;
 
 						if (checkSame) {
-							setPos(XX - 24, YY + 17); cout << ">> It already exists, do you want to change another name? Press Y/N";
+							setPos(XX - 24, YY + 17); cout << (*selectedLanguage)[">> It already exists, do you want to change another name? Press Y/N"];
 							while (true) {
 								char key = _getch();
 								if (key == 'N' || key == 'n') break;
@@ -162,24 +167,23 @@ void loadGame(int XX, int YY) {
 					break;
 				}
 			} if (S != -1) s2[S].draw();
-
 		}
 		else {
-			int col = S / 5, mouSe;
-			if (inputt == 1) mouSe = (S + 4) % 5 + col * 5;
-			else if (inputt == 2) mouSe = (S + 10) % 15;
-			else if (inputt == 3) mouSe = (S + 1) % 5 + col * 5;
-			else if (inputt == 4) mouSe = (S + 5) % 15;
-			if (mouSe <= size) S = mouSe;
+			int mouSe = -1;
+			if (inputt == 1) mouSe = S - 1;
+			else if (inputt == 2) mouSe = S - 3;
+			else if (inputt == 3) mouSe = S + 1;
+			else if (inputt == 4) mouSe = S + 3;
+			if (mouSe <= size && mouSe >= 0) S = mouSe;
 		}
 	}
 }
 
-void saveGame(int XX, int YY, vector<ii> Data, int Xscore, int Oscore, string name1, string name2, string& nameFile, bool vsBot) {
+void saveGame(int XX, int YY, vector<ii> moveMade, int Xscore, int Oscore, string name1, string name2, string& nameFile, bool vsBot) {
 	if (nameFile == "") {
-		insertNames:
+	insertNames:
 		drawOutBoard(XX - 3, YY + 2 * boardSize - 1, 2);
-		if (!insertName(XX + 10, YY + 2 * boardSize - 1, nameFile)) {
+		if (!insertName(XX + 10, YY + 2 * boardSize + 1, nameFile)) {
 			drawOutBoard(XX + 18, YY + 2 * boardSize - 1, 1);
 			return;
 		} if (nameFile == "") goto insertNames;
@@ -198,10 +202,12 @@ void saveGame(int XX, int YY, vector<ii> Data, int Xscore, int Oscore, string na
 				nameFile = "";
 				drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 5);
 				return;
-			} else if (key == 'Y' || key == 'y') break;
+			}
+			else if (key == 'Y' || key == 'y') break;
 		}
 		drawOutBoard(XX - 9, YY + 2 * boardSize + 1, 5);
-	} else {
+	}
+	else {
 		while ((int)fileSave.size() >= 15)
 			fileSave.erase(fileSave.begin());
 		fileSave.push_back(nameFile);
@@ -212,10 +218,10 @@ void saveGame(int XX, int YY, vector<ii> Data, int Xscore, int Oscore, string na
 	pushList();
 
 	ofstream File(nameFile + ".txt");
-	File << int(vsBot) << " " << Xscore << " " << Oscore << '\n';
+	File << bool(vsBot) << " " << Xscore << " " << Oscore << '\n';
 	File << name1 << " " << name2 << '\n';
 
-	for (const auto& tmp : Data) {
+	for (const auto& tmp : moveMade) {
 		File << tmp.first << " " << tmp.second << "\n";
 	} File.close();
 }
@@ -226,7 +232,8 @@ void loadFromFile(string nameFile, vector<ii>& Data, int& Xscore, int& Oscore, s
 	ifstream file(nameFile);
 	int x, y;
 
-	file >> vsBot >> Xscore >> Oscore >> name1 >> name2;
+	file >> vsBot >> Xscore >> Oscore;
+	file >> name1 >> name2;
 	while (file >> x >> y) Data.emplace_back(x, y);
 	file.close();
 }

@@ -1,4 +1,5 @@
 #include "Newgame.h"
+#include "Language.h"
 
 using namespace std;
 
@@ -50,8 +51,9 @@ void mode1(int XX, int YY) {
 	system("cls");
 
 	string name;
-	drawMenu1(XX, YY, 27, 15, "PLAYER NAME: ");
-	if (!insertName(XX + 15, YY + 1, name = "[PLAYER]")) return;
+	newGameText(XX + 2, YY);
+	drawMenu1(XX, YY + 10, 27, 14, (*selectedLanguage)["PLAYER NAME: "]);
+	if (!insertName(XX + 16, YY + 11, name = (*selectedLanguage)["[PLAYER]"])) return;
 
 	startGame(true, true, XX - 3, YY, name, "Bot", {}, "", 0, 0);
 }
@@ -59,12 +61,13 @@ void mode1(int XX, int YY) {
 void mode2(int XX, int YY) {
 	system("cls");
 	string name1, name2;
+	newGameText(XX + 2, YY);
 
-	drawMenu1(XX, YY, 29, 15, "PLAYER NAME 1: ");
-	if (!insertName(XX + 15, YY + 1, name1 = "[player1]")) return;
+	drawMenu1(XX, YY + 10, 29, 14, (*selectedLanguage)["PLAYER NAME 1: "]);
+	if (!insertName(XX + 18, YY + 11, name1 = (*selectedLanguage)["[player1]"])) return;
 
-	drawMenu1(XX, YY + 3, 29, 15, "PLAYER NAME 2: ");
-	if (!insertName(XX + 15, YY + 4, name2 = "[player2]")) return;
+	drawMenu1(XX, YY + 13, 29, 14, (*selectedLanguage)["PLAYER NAME 2: "]);
+	if (!insertName(XX + 18, YY + 14, name2 = (*selectedLanguage)["[player2]"])) return;
 
 	startGame(false, true, XX - 3, YY, name1, name2, {}, "", 0, 0);
 }
@@ -80,11 +83,11 @@ void newGame(int XX, int YY) {
 	};
 
 	newGameMenu a1[2], a2[2];
-	a1[0] = { XX, YY + 10, 25, 15,  "     PLAY WITH BOT     " };
-	a1[1] = { XX, YY + 15, 25, 15,  "    PLAY WITH HUMAN    " };
+	a1[0] = { XX, YY + 10, 25, 15,  (*selectedLanguage)["     PLAY WITH BOT     "] };
+	a1[1] = { XX, YY + 15, 25, 15,  (*selectedLanguage)["    PLAY WITH HUMAN    "] };
 
-	a2[0] = { XX, YY + 10, 25, 15,  ">>   PLAY WITH BOT   <<" };
-	a2[1] = { XX, YY + 15, 25, 15,  ">>  PLAY WITH HUMAN  <<" };
+	a2[0] = { XX, YY + 10, 25, 15,  (*selectedLanguage)[">>   PLAY WITH BOT   <<"] };
+	a2[1] = { XX, YY + 15, 25, 15,  (*selectedLanguage)[">>  PLAY WITH HUMAN  <<"] };
 
 	system("cls");
 	int S = 0;
@@ -96,7 +99,6 @@ void newGame(int XX, int YY) {
 		a2[S].draw();
 
 		int inputNewGame = isNextMove();
-		system("cls");
 		if (inputNewGame == 1 || inputNewGame == 3) S ^= 1;
 		else if (inputNewGame == 0) {
 			if (S == 0)mode1(XX - 2, YY);

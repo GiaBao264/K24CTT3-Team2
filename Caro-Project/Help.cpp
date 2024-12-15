@@ -1,5 +1,6 @@
 #include "Library.h"
 #include "Graphic.h"
+#include "Language.h"
 
 #define gameTheme 15, 0
 
@@ -17,62 +18,62 @@ void help(int Xi, int Yi) {
 
 	setColor(3, 0);
 	setPos(XX + 30, YY - 4);
-	cout << "KEYBOARD GUIDE";
+	cout << (*selectedLanguage)["KEYBOARD GUIDE"];
 
 	setPos(XX + 31, YY + 10);
-	cout << "HOW TO PLAY";
+	cout << (*selectedLanguage)["HOW TO PLAY"];
 
 	setColor(gameTheme);
 	setPos(XX + 33, YY - 2);
-	cout << "Player 1";
+	cout << (*selectedLanguage)["Player 1"];
 	setPos(XX + 45, YY - 2);
-	cout << "Player 2";
+	cout << (*selectedLanguage)["Player 2"];
 	setPos(XX + 22, YY - 1);
-	cout << "Go up:        W           Up";
+	cout << (*selectedLanguage)["Go up:        W           Up"];
 	setPos(XX + 22, YY);
-	cout << "Go down:      S          Down";
+	cout << (*selectedLanguage)["Go down:      S          Down"];
 	setPos(XX + 22, YY + 1);
-	cout << "Go left:      A          Left";
+	cout << (*selectedLanguage)["Go left:      A          Left"];
 	setPos(XX + 22, YY + 2);
-	cout << "Go right:     D          Right";
+	cout << (*selectedLanguage)["Go right:     D          Right"];
 	setPos(XX + 22, YY + 3);
-	cout << "Mark:       Space       Enter";
+	cout << (*selectedLanguage)["Mark:       Space       Enter"];
 
 	setColor(3, 0);
 	setPos(XX + 34, YY + 5);
-	cout << "Other";
+	cout << (*selectedLanguage)["Other"];
 	setColor(gameTheme);
 	setPos(XX + 22, YY + 6);
-	cout << "Undo: U    Save: I    Exit: Esc";
+	cout << (*selectedLanguage)["Undo: U    Save: I    Exit: Esc"];
 
 	setColor(11, 0);
 	setPos(XX - 2, YY + 12);
-	cout << "Chessboard:";
+	cout << (*selectedLanguage)["Chessboard:"];
 	setPos(XX - 2, YY + 13);
-	cout << "Players:";
+	cout << (*selectedLanguage)["Players:"];
 	setPos(XX - 2, YY + 14);
-	cout << "Turn:";
+	cout << (*selectedLanguage)["Turn:"];
 	setPos(XX - 2, YY + 15);
-	cout << "Target:";
+	cout << (*selectedLanguage)["Target:"];
 	setPos(XX - 2, YY + 17);
-	cout << "Tie:";
+	cout << (*selectedLanguage)["Tie:"];
 	setColor(gameTheme);
 
-	setPos(XX + 9, YY + 12);
-	cout << "Square grid of 15x15 cells (225 cells).";
-	setPos(XX + 7, YY + 13);
-	cout << "Two players, using two types of symbols (usually X and O).";
-	setPos(XX + 4, YY + 14);
-	cout << "Players take turns marking an empty square on the board with their symbol.";
-	setPos(XX + 6, YY + 15);
-	cout << "The winner is the first person to get 5 consecutive symbols in one of";
-	setPos(XX + 8, YY + 16);
-	cout << "the directions: horizontal, vertical, or diagonal.";
-	setPos(XX + 3, YY + 17);
-	cout << "The game is a draw if the board is full and no one wins.";
+	setPos(XX + 10, YY + 12);
+	cout << (*selectedLanguage)["Square grid of 15x15 cells (225 cells)."];
+	setPos(XX + 10, YY + 13);
+	cout << (*selectedLanguage)["Two players, using two types of symbols (usually X and O)."];
+	setPos(XX + 10, YY + 14);
+	cout << (*selectedLanguage)["Players take turns marking an empty square on the board with their symbol."];
+	setPos(XX + 10, YY + 15);
+	cout << (*selectedLanguage)["The winner is the first person to get 5 consecutive symbols in one of"];
+	setPos(XX + 12, YY + 16);
+	cout << (*selectedLanguage)["the directions: horizontal, vertical, or diagonal."];
+	setPos(XX + 10, YY + 17);
+	cout << (*selectedLanguage)["The game is a draw if the board is full and no one wins."];
 
 	setColor(11, 0);
-	setPos(XX + 26, YY + 19); cout << "<< Press ESC to exit >>";
+	setPos(XX + 26, YY + 19); cout << (*selectedLanguage)["<< Press ESC to exit >>"];
 	setColor(gameTheme);
 
 	while (isNextMove() != 5);

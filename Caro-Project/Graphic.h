@@ -25,4 +25,11 @@ void drawCaroMain(int XX, int YY);
 void newGameText(int XX, int YY);
 void printTimeAtPosition(int x, int y, int minutes, int seconds);
 
+void drawWord(const char* word, int x, int y, int bground, int fground);
+void drawEndMatch(int XX, int YY, int h, int w);
+void drawWord_IN_MATCH(int startX, int startY, int bground, int fground);
+void drawWord_X_WIN(int startX, int startY, int bground, int fground);
+void drawWord_O_WIN(int startX, int startY, int bground, int fground);
+void printCenteredAt(int x, int y, const string& str);
+
 #endif
