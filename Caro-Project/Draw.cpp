@@ -32,6 +32,68 @@ void drawA(int XX, int YY, int bground, int fground) { // 6 * 8
 	cout << char(200) << char(205) << char(188) << "  " << char(200) << char(205) << char(188);
 }
 
+void drawLargeA(int XX, int YY, int bground, int fground) { // 13 * 16
+    // Top row
+    setPos(XX + 2, YY);
+    setColor(fground, fground); cout << "          ";
+    setColor(bground, fground); cout << char(187);
+
+    // Row 2
+    setPos(XX + 1, YY + 1);
+    setColor(fground, fground); cout << "            ";
+    setColor(bground, fground); cout << char(187);
+
+    // Row 3
+    setPos(XX, YY + 2);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(201) << char(205) << char(205) << char(205) << char(205) << char(205);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(187);
+
+    // Row 4
+    setPos(XX, YY + 3);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(186) << "     ";
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(186);
+
+    // Rows 5-6
+    for (int i = 4; i <= 5; i++) {
+        setPos(XX, YY + i);
+        setColor(fground, fground); cout << "              ";
+        setColor(bground, fground); cout << char(186);
+    }
+
+    // Row 7
+    setPos(XX, YY + 6);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(201) << char(205) << char(205) << char(205) << char(205) << char(205);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(186);
+
+    // Row 8
+    setPos(XX, YY + 7);
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(186) << "     ";
+    setColor(fground, fground); cout << "    ";
+    setColor(bground, fground); cout << char(186);
+
+    // Rows 9-11
+    for (int i = 8; i <= 10; i++) {
+        setPos(XX, YY + i);
+        setColor(fground, fground); cout << "    ";
+        setColor(bground, fground); cout << char(186) << "     ";
+        setColor(fground, fground); cout << "    ";
+        setColor(bground, fground); cout << char(186);
+    }
+
+    // Bottom row
+    setPos(XX, YY + 11);
+    setColor(bground, fground);
+    cout << char(200) << char(205) << char(205) << char(205) << char(188) << "     " 
+         << char(200) << char(205) << char(205) << char(205) << char(188);
+}
+
 void drawB(int XX, int YY, int bground, int fground) { // 6 * 8
 	setPos(XX, YY);
 	setColor(fground, fground); for (int i = 0; i < 6; ++i) cout << " ";
@@ -269,6 +331,30 @@ void drawI(int XX, int YY, int bground, int fground) {  // 6 * 3
 
 	setPos(XX, YY + 5);
 	cout << char(200) << char(205) << char(188);
+}
+
+void drawLargeI(int XX, int YY, int bground, int fground) {  // 12 * 6
+	// Top row
+	setPos(XX, YY);
+	setColor(fground, fground); cout << "    ";
+	setColor(bground, fground); cout << char(187);
+
+	// Row 2
+	setPos(XX, YY + 1);
+	setColor(fground, fground); cout << "    ";
+	setColor(bground, fground); cout << char(186);
+
+	// Rows 3-8
+	for (int i = 2; i <= 10; i++) {
+		setPos(XX, YY + i);
+		setColor(fground, fground); cout << "    ";
+		setColor(bground, fground); cout << char(186);
+	}
+
+	// Bottom row
+	setPos(XX, YY + 11);
+	setColor(bground, fground);
+	cout << char(200) << char(205) << char(205) << char(205) << char(188);
 }
 
 void drawJ(int XX, int YY, int bground, int fground) {  // 6 * 8

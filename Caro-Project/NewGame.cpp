@@ -51,8 +51,9 @@ void mode1(int XX, int YY) {
 	system("cls");
 
 	string name;
-	newGameText(XX + 2, YY);
+	newGameText(XX + 2, YY - 4);
 	drawMenu1(XX, YY + 10, 27, 14, (*selectedLanguage)["PLAYER NAME: "]);
+	decorate_draw(XX - 40, YY + 5, "ARTS/amongus2.txt");
 	if (!insertName(XX + 16, YY + 11, name = (*selectedLanguage)["[PLAYER]"])) return;
 
 	startGame(true, true, XX - 3, YY, name, "Bot", {}, "", 0, 0);
@@ -61,12 +62,14 @@ void mode1(int XX, int YY) {
 void mode2(int XX, int YY) {
 	system("cls");
 	string name1, name2;
-	newGameText(XX + 2, YY);
+	newGameText(XX + 2, YY - 4);
 
 	drawMenu1(XX, YY + 10, 29, 14, (*selectedLanguage)["PLAYER NAME 1: "]);
+	decorate_draw(XX - 40, YY + 5, "ARTS/amongus2.txt");
 	if (!insertName(XX + 18, YY + 11, name1 = (*selectedLanguage)["[player1]"])) return;
 
 	drawMenu1(XX, YY + 13, 29, 14, (*selectedLanguage)["PLAYER NAME 2: "]);
+	decorate_draw(XX + 39, YY + 5, "ARTS/amongus2_reversed.txt");
 	if (!insertName(XX + 18, YY + 14, name2 = (*selectedLanguage)["[player2]"])) return;
 
 	startGame(false, true, XX - 3, YY, name1, name2, {}, "", 0, 0);
@@ -93,10 +96,22 @@ void newGame(int XX, int YY) {
 	int S = 0;
 
 	while (true) {
-		newGameText(XX, YY);
+		newGameText(XX, YY - 4);
 		for (int i = 0; i < 2; ++i)
 			a1[i].draw();
 		a2[S].draw();
+
+		decorate_draw(XX - 40, YY + 5, "ARTS/amongus2.txt");
+		decorate_draw(XX + 31, YY + 3, "ARTS/blank.txt");
+		if (S == 0)
+		{
+			drawLargeA(XX + 40, YY + 7, 15, 1);
+			drawLargeI(XX + 40 + 16, YY + 7, 15, 1);
+		}
+		else
+		{
+			decorate_draw(XX + 39, YY + 5, "ARTS/amongus2_reversed.txt");
+		}
 
 		int inputNewGame = isNextMove();
 		if (inputNewGame == 1 || inputNewGame == 3) S ^= 1;

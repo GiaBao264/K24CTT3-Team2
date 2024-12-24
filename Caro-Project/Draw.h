@@ -28,5 +28,7 @@ void drawW(int XX, int YY, int bground, int fground);
 void drawX(int XX, int YY, int bground, int fground);
 void drawY(int XX, int YY, int bground, int fground);
 void drawZ(int XX, int YY, int bground, int fground);
+void drawLargeA(int XX, int YY, int bground, int fground);
+void drawLargeI(int XX, int YY, int bground, int fground);
 
 #endif

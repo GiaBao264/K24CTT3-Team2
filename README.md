@@ -3,22 +3,17 @@
 ## About Us
 We're **Team 2** from 24CTT3, studying **FIT** at **HCMUS**.
 
-Made with the effort and love from **Team 2**.
+Made with effort and love from **Team 2**.
 
 ## Team's Members
-- Team leader & game logic: [Võ Lân Tuấn - 24120240](https://github.com/VLTisME)
+- Team leader & Game logic: [Võ Lân Tuấn - 24120240](https://github.com/VLTisME)
 - Game logic: [Trần Huỳnh Gia Bảo - 24120267](https://github.com/GiaBao264)
 - Graphic designer: [Đỗ Chí Cao - 24120270](https://github.com/caodoc)
 - Graphic designer: [Võ Nguyễn Việt Hoàng - 24120249](https://github.com/Djoko-Vic)
-- Graphic designer & game's language: [Phạm Anh Tuấn - 24120238](https://github.com/ahtuan171)
+- Graphic designer & Game's language: [Phạm Anh Tuấn - 24120238](https://github.com/ahtuan171)
 
 >[!IMPORTANT]
 >Instructor: **Thầy Trương Toàn Thịnh**
-
-## Game's Description
-- **Game's name**: Caro Game - 24CTT3A - Group 2
-- **Game's base**: [link](./GAMEBASE.md)
-- **Submission Requirements**: [link](./REQUIREMENT.md)
 
 ## Additional Information:
 - **HCMUS** stands for ***Ho Chi Minh City Universe of Science***, one of the five affiliated universities of the **Vietnam National University, Ho Chi Minh City**.

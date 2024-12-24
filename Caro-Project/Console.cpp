@@ -161,3 +161,32 @@ void decorate_draw(int x, int y, const string& nameFile) {
 		}
 	}
 }
+
+void decorate_draw_overlap(int x, int y, const string& nameFile, int isReversed) {
+	ifstream file(nameFile.c_str());
+	string s;
+	int i = 0;
+	while (getline(file, s))
+	{
+		i++;
+		stringstream ss(s);
+		int j = 0;
+		while (!ss.eof())
+		{
+			j++;
+			int color;
+			ss >> color;
+			if (color != 15) draw_square(x, y, j, i, color);
+		}
+	}
+	if (isReversed == 0)
+	{
+		draw_square(x, y, 8, 4, 15);
+		draw_square(x, y, 9, 4, 15);
+	}
+	else
+	{
+		draw_square(x, y, 4, 4, 15);
+		draw_square(x, y, 5, 4, 15);
+	}
+}

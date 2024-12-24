@@ -109,7 +109,7 @@ int main() {
 	fixConsoleWindow(67, 98);
 	SetConsoleTitle(L"CaroGame - 24CTT3 - Group 2");
 	ShowCur(0);
-	introAnimation("ARTS/pic.txt", 20, 3000, 0, 0);
+	//introAnimation("ARTS/pic.txt", 20, 3000, 0, 0);
 
 	drawMainMenu(61, 12);
 
