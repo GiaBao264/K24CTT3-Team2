@@ -31,7 +31,7 @@ int generateRandomNumber(int a, int b) {
 void introAnimation(const string& filename, int delayTime, int stopTime, int x, int y) {
 	decorate_draw(-1, -1, filename);
 	setColor(gameTheme);
-	setPos(55, 29); cout << "          ";
+	/*setPos(55, 29); cout << "          ";
 	setPos(55, 31); cout << "          ";
 	setPos(55, 30); cout << " LOADING  ";       //33
 	drawBox(65, 29, 33, 15, "                               ");
@@ -49,7 +49,7 @@ void introAnimation(const string& filename, int delayTime, int stopTime, int x, 
 	sleep_for(milliseconds(generateRandomNumber(50, 1000)));
 	for (int i = 1; i <= 31 - a; i++) {
 		cout << char(symbol.dotSquare);
-	}
+	}*/
 	int color = 11;
 	atomic<bool> stopBlinking(false);
 	while (!stopBlinking) {
